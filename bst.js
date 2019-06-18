@@ -140,6 +140,7 @@ function main() {
     console.log(tree(bst))
     console.log(height(bst))
     console.log(isSearch(bst))
+    console.log(isBal(bst))
 }
 
 main();
@@ -148,6 +149,8 @@ function height(node) {
     if (!node) return 0;
     var leftHeight = height(node.left);
     var rightHeight = height(node.right);
+
+
     return Math.max(leftHeight, rightHeight) + 1;
 }
 
@@ -165,4 +168,42 @@ function isSearch(node) {
             right = isSearch(node.right);
     }
     return (left && right) ? true : false;
+}
+
+function sortArrBST(arr, start=0, end=arr.length-1) {
+
+    if (start > end){
+        return ;
+    }
+
+    let middle = Math.floor((start + end) / 2)
+    let BST = new BinarySearchTree(middle)
+    BST.left = sortArrBST(arr, start, middle-1)
+    BST.right = sortArrBST(arr,middle+1,end)
+    return BST
+}
+let test1 = sortArrBST([1,2,3,4,5,6,7,8,9])
+console.log(test1)
+console.log(isBal(test1))
+
+function isBal(tree) {
+    console.log(tree)
+    let leftH=0;
+    let rightH =0;
+        if (tree.left !== null) {
+            console.log(tree)
+            leftH = height(tree.left)
+            if (tree.left){
+                isBal(tree.left) ;
+            }
+        }
+        if (tree.right !== null) {
+            rightH = height(tree.right)
+            if (tree.right){
+                isBal(tree.right) ;
+            }
+    }
+    let difference = Math.abs(leftH - rightH)
+    console.log(difference)
+    return (difference <= 1)? true: false;
 }

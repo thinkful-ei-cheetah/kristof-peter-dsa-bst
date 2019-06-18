@@ -8,25 +8,27 @@ class BinarySearchTree {
         this.left = null;
         this.right = null;
     }
-    insert(item) {
-        if (this.key === null) {
-            this.key = item;
-            // this.value = item.value
+    insert(key, value) {
+
+        if (this.key == null) {
+            this.key = key;
+            this.value = value;
         }
-        else if (item.key < this.key) {
+        else if (key < this.key) {
+            
             if (this.left == null) {
-                this.left = new BinarySearchTree(item.key, item.value, this)
+                this.left = new BinarySearchTree(key, value, this);
             }
             else {
-                this.left.insert(item)
+                this.left.insert(key, value);
             }
         }
         else {
             if (this.right == null) {
-                this.right = new BinarySearchTree(item.key, item.value, this)
+                this.right = new BinarySearchTree(key, value, this);
             }
             else {
-                this.right.insert(item)
+                this.right.insert(key, value);
             }
         }
     }

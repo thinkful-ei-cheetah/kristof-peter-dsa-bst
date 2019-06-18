@@ -111,20 +111,42 @@ class BinarySearchTree {
         return this.left._findMin();
     }
 
+
+}
+
+function tree(t){
+    if(!t){
+        return 0;
+    }
+    return tree(t.left) + t.key + tree(t.right)
 }
 
 function main() {
     let bst = new BinarySearchTree()
 
     bst.insert(3)
+    bst.insert(22)
+    bst.insert(23)
+    bst.insert(21)
+    bst.insert(20)
+    bst.insert(19)
+    bst.insert(18)
+    bst.insert(17)
     bst.insert(4)
-    bst.insert(6)
-    bst.insert(9)
     bst.insert(2)
-    bst.insert(5)
-    bst.insert(7)
-bst.insert(1)
-    console.log(bst)
+    bst.insert(1)
+    
+
+    console.log(tree(bst))
+    console.log(height(bst))
 }
 
 main();
+
+function height(node){
+    if(!node) return 0;
+    var leftHeight = height(node.left);
+    var rightHeight = height(node.right);
+ 
+    return Math.max(leftHeight, rightHeight) + 1;
+}

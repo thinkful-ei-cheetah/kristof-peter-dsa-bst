@@ -35,16 +35,16 @@ class BinarySearchTree {
 
     find(key){
         if(this.key === key){
-            return this.value
+            return this.value;
         }
         else if (key < this.key && this.left){
-            this.left.find(key)
+            this.left.find(key);
         }
         else if(key > this.key && this.left){
-            this.fight.find(key)
+            this.fight.find(key);
         }
         else {
-            throw new Error('key error')
+            throw new Error('key error');
         }
     }
 
@@ -54,35 +54,35 @@ class BinarySearchTree {
                 const successor = this.right._findMin();
                 this.key = successor.key;
                 this.value = successor.value;
-                successor.remove(successor.key)
+                successor.remove(successor.key);
             }
             else if (this.left){
-                this._replaceWith(this.left)
+                this._replaceWith(this.left);
             }
             else if (this.right){
-                this._replaceWith(this.left)
+                this._replaceWith(this.left);
             }
             else {
-                this._replaceWith(null)
+                this._replaceWith(null);
             }
         }
         else if (key < this.key && this.left) {
-            this.left.remove(key)
+            this.left.remove(key);
         }
         else if (key > this.key && this.left){
-            this.right.remove(key)
+            this.right.remove(key);
         }
         else {
-            throw new Error('Key Error')
+            throw new Error('Key Error');
         }
     }
 
     _replaceWith(node){
         if (this == this.parent.left) {
-            this.parent.left = node
+            this.parent.left = node;
         }
         else if (this === this.parent.right) {
-            this.parent.right = node
+            this.parent.right = node;
         }
         
         if (node){
@@ -99,14 +99,14 @@ class BinarySearchTree {
                 this.key = null;
                 this.value = null;
                 this.left = null;
-                this.right = null
+                this.right = null;
             }
         }
     }
 
     _findMin() {
         if (!this.left){
-            return this
+            return this;
         }
         return this.left._findMin();
     }
@@ -114,17 +114,48 @@ class BinarySearchTree {
 }
 
 function main() {
-    let bst = new BinarySearchTree()
+    let bst = new BinarySearchTree();
 
-    bst.insert(3)
-    bst.insert(4)
-    bst.insert(6)
-    bst.insert(9)
-    bst.insert(2)
-    bst.insert(5)
-    bst.insert(7)
-bst.insert(1)
-    console.log(bst)
+    bst.insert(3);
+    bst.insert(4);
+    bst.insert(6);
+    bst.insert(9);
+    bst.insert(2);
+    bst.insert(5);
+    bst.insert(7);
+bst.insert(1);
+    console.log(findThird(bst));
 }
 
 main();
+function height(node){
+    if(!node) return 0;
+    var leftHeight = height(node.left);
+    var rightHeight = height(node.right);
+ 
+    return Math.max(leftHeight, rightHeight) + 1;
+ }
+
+ function findThird(tree){
+    let currentNode = tree; 
+
+    while (currentNode.right !== null){
+        currentNode = currentNode.right;
+    }
+    let parent = currentNode.parent;
+
+    if(currentNode.left !==null || parent.left !== null)
+        return parent.key;
+
+    if(parent.left !== null){
+        let newNode = parent.left;
+        while (newNode.right !== null){
+            newNode = newNode.right;
+        }
+        return newNode.key;
+    }
+ }
+
+ function isMatch(tree1, tree2) {
+    if tree1.key 
+ }

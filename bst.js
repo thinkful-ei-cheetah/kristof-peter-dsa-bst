@@ -11,18 +11,19 @@ class BinarySearchTree {
     insert(item) {
         if (this.key === null) {
             this.key = item;
+            // this.value = item.value
         }
         else if (item.key < this.key) {
-            if (this.left === null) {
-                this.left = BinarySearchTree(item.key, item.value, this)
+            if (this.left == null) {
+                this.left = new BinarySearchTree(item.key, item.value, this)
             }
             else {
                 this.left.insert(item)
             }
         }
         else {
-            if (this.right === null) {
-                this.right = BinarySearchTree(item.key, item.value, this)
+            if (this.right == null) {
+                this.right = new BinarySearchTree(item.key, item.value, this)
             }
             else {
                 this.right.insert(item)
@@ -109,3 +110,19 @@ class BinarySearchTree {
     }
 
 }
+
+function main() {
+    let bst = new BinarySearchTree()
+
+    bst.insert(3)
+    bst.insert(4)
+    bst.insert(6)
+    bst.insert(9)
+    bst.insert(2)
+    bst.insert(5)
+    bst.insert(7)
+bst.insert(1)
+    console.log(bst)
+}
+
+main();

@@ -15,7 +15,7 @@ class BinarySearchTree {
             this.value = value;
         }
         else if (key < this.key) {
-            
+
             if (this.left == null) {
                 this.left = new BinarySearchTree(key, value, this);
             }
@@ -33,14 +33,14 @@ class BinarySearchTree {
         }
     }
 
-    find(key){
-        if(this.key === key){
+    find(key) {
+        if (this.key === key) {
             return this.value
         }
-        else if (key < this.key && this.left){
+        else if (key < this.key && this.left) {
             this.left.find(key)
         }
-        else if(key > this.key && this.left){
+        else if (key > this.key && this.left) {
             this.fight.find(key)
         }
         else {
@@ -48,18 +48,18 @@ class BinarySearchTree {
         }
     }
 
-    remove(key){
-        if (this.key === key){
-            if (this.left && this.right){
+    remove(key) {
+        if (this.key === key) {
+            if (this.left && this.right) {
                 const successor = this.right._findMin();
                 this.key = successor.key;
                 this.value = successor.value;
                 successor.remove(successor.key)
             }
-            else if (this.left){
+            else if (this.left) {
                 this._replaceWith(this.left)
             }
-            else if (this.right){
+            else if (this.right) {
                 this._replaceWith(this.left)
             }
             else {
@@ -69,7 +69,7 @@ class BinarySearchTree {
         else if (key < this.key && this.left) {
             this.left.remove(key)
         }
-        else if (key > this.key && this.left){
+        else if (key > this.key && this.left) {
             this.right.remove(key)
         }
         else {
@@ -77,15 +77,15 @@ class BinarySearchTree {
         }
     }
 
-    _replaceWith(node){
+    _replaceWith(node) {
         if (this == this.parent.left) {
             this.parent.left = node
         }
         else if (this === this.parent.right) {
             this.parent.right = node
         }
-        
-        if (node){
+
+        if (node) {
             node.parent = this.parent;
         }
         else {
@@ -105,7 +105,7 @@ class BinarySearchTree {
     }
 
     _findMin() {
-        if (!this.left){
+        if (!this.left) {
             return this
         }
         return this.left._findMin();
@@ -114,8 +114,8 @@ class BinarySearchTree {
 
 }
 
-function tree(t){
-    if(!t){
+function tree(t) {
+    if (!t) {
         return 0;
     }
     return tree(t.left) + t.key + tree(t.right)
@@ -135,18 +135,34 @@ function main() {
     bst.insert(4)
     bst.insert(2)
     bst.insert(1)
-    
+
 
     console.log(tree(bst))
     console.log(height(bst))
+    console.log(isSearch(bst))
 }
 
 main();
 
-function height(node){
-    if(!node) return 0;
+function height(node) {
+    if (!node) return 0;
     var leftHeight = height(node.left);
     var rightHeight = height(node.right);
- 
     return Math.max(leftHeight, rightHeight) + 1;
+}
+
+function isSearch(node) {
+    console.log(node.left)
+    let left = true;
+    let right = true;
+        if (node.left !== null) {
+            if (node.left.key > node.key) return false;
+            left = isSearch(node.left);
+            
+        }
+        if (node.right !== null) {
+            if (node.right.key < node.key) return false;
+            right = isSearch(node.right);
+    }
+    return (left && right) ? true : false;
 }

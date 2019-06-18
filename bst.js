@@ -15,7 +15,7 @@ class BinarySearchTree {
             this.value = value;
         }
         else if (key < this.key) {
-            
+
             if (this.left == null) {
                 this.left = new BinarySearchTree(key, value, this);
             }
@@ -48,9 +48,9 @@ class BinarySearchTree {
         }
     }
 
-    remove(key){
-        if (this.key === key){
-            if (this.left && this.right){
+    remove(key) {
+        if (this.key === key) {
+            if (this.left && this.right) {
                 const successor = this.right._findMin();
                 this.key = successor.key;
                 this.value = successor.value;
@@ -77,15 +77,15 @@ class BinarySearchTree {
         }
     }
 
-    _replaceWith(node){
+    _replaceWith(node) {
         if (this == this.parent.left) {
             this.parent.left = node;
         }
         else if (this === this.parent.right) {
             this.parent.right = node;
         }
-        
-        if (node){
+
+        if (node) {
             node.parent = this.parent;
         }
         else {
@@ -111,32 +111,104 @@ class BinarySearchTree {
         return this.left._findMin();
     }
 
+
+}
+
+function tree(t) {
+    if (!t) {
+        return 0;
+    }
+    return tree(t.left) + t.key + tree(t.right)
 }
 
 function main() {
     let bst = new BinarySearchTree();
 
-    bst.insert(3);
-    bst.insert(4);
-    bst.insert(6);
-    bst.insert(9);
-    bst.insert(2);
-    bst.insert(5);
-    bst.insert(7);
-bst.insert(1);
-    console.log(findThird(bst));
+    bst.insert(3)
+    bst.insert(22)
+    bst.insert(23)
+    bst.insert(21)
+    bst.insert(20)
+    bst.insert(19)
+    bst.insert(18)
+    bst.insert(17)
+    bst.insert(4)
+    bst.insert(2)
+    bst.insert(1)
+
+
+    console.log(tree(bst))
+    console.log(height(bst))
+    console.log(isSearch(bst))
+    console.log(isBal(bst))
 }
 
 main();
-function height(node){
-    if(!node) return 0;
+
+function height(node) {
+    if (!node) return 0;
     var leftHeight = height(node.left);
     var rightHeight = height(node.right);
- 
-    return Math.max(leftHeight, rightHeight) + 1;
- }
 
- function findThird(tree){
+
+    return Math.max(leftHeight, rightHeight) + 1;
+}
+
+function isSearch(node) {
+    console.log(node.left)
+    let left = true;
+    let right = true;
+        if (node.left !== null) {
+            if (node.left.key > node.key) return false;
+            left = isSearch(node.left);
+            
+        }
+        if (node.right !== null) {
+            if (node.right.key < node.key) return false;
+            right = isSearch(node.right);
+    }
+    return (left && right) ? true : false;
+}
+
+function sortArrBST(arr, start=0, end=arr.length-1) {
+
+    if (start > end){
+        return ;
+    }
+
+    let middle = Math.floor((start + end) / 2)
+    let BST = new BinarySearchTree(middle)
+    BST.left = sortArrBST(arr, start, middle-1)
+    BST.right = sortArrBST(arr,middle+1,end)
+    return BST
+}
+let test1 = sortArrBST([1,2,3,4,5,6,7,8,9])
+console.log(test1)
+console.log(isBal(test1))
+
+function isBal(tree) {
+    console.log(tree)
+    let leftH=0;
+    let rightH =0;
+        if (tree.left !== null) {
+            console.log(tree)
+            leftH = height(tree.left)
+            if (tree.left){
+                isBal(tree.left) ;
+            }
+        }
+        if (tree.right !== null) {
+            rightH = height(tree.right)
+            if (tree.right){
+                isBal(tree.right) ;
+            }
+    }
+    let difference = Math.abs(leftH - rightH)
+    console.log(difference)
+    return (difference <= 1)? true: false;
+}
+
+function findThird(tree){
     let currentNode = tree; 
 
     while (currentNode.right !== null){
@@ -156,6 +228,6 @@ function height(node){
     }
  }
 
- function isMatch(tree1, tree2) {
-    if tree1.key 
- }
+//  function isMatch(tree1, tree2) {
+//     if tree1.key 
+//  }
